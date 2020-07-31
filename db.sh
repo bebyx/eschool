@@ -20,6 +20,9 @@ GRANT ALL ON eschool.* TO 'eschool'@'%' IDENTIFIED BY 'password' WITH GRANT OPTI
 FLUSH PRIVILEGES;
 EOF
 
-sed -i.bak '/bind-address/ s/127.0.0.1/0.0.0.0/' /etc/my.cnf.d/mariadb-server.cnf
+sed -i.bak '/bind-address/ s/#bind-address=127.0.0.1/bind-address=0.0.0.0/' /etc/my.cnf.d/mariadb-server.cnf
 
 systemctl restart mariadb
+
+firewall-cmd --permanent --zone=public --add-port=3306/tcp
+firewall-cmd --reload
