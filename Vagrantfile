@@ -24,4 +24,16 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision :shell, path: "app.sh"
   end
 
+  config.vm.define "fe" do |subconfig|
+      subconfig.vm.box = BOX_IMAGE
+      subconfig.vm.network "private_network", ip: "192.168.14.90"
+      subconfig.vm.synced_folder ".", "/vagrant"
+      subconfig.vm.provider "virtualbox" do |vb|
+          vb.name = "eschool_front"
+          vb.memory = "1064"
+          vb.cpus = "1"
+      end
+      subconfig.vm.provision :shell, path: "fe.sh"
+  end
+
 end

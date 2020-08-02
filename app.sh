@@ -46,4 +46,4 @@ cd eSchool/
 mvn clean package -DskipTests
 
 # Launch web app
-java -jar target/eschool.jar
+#java -jar target/eschool.jar

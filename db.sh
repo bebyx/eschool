@@ -8,7 +8,7 @@ dnf install mariadb-server -y
 systemctl start mariadb
 systemctl enable mariadb
 
-# mysql_secure_installation script
+# Run mysql_secure_installation script
 mysql -u root <<-EOF
 UPDATE mysql.user SET Password=PASSWORD('') WHERE User='root';
 DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
