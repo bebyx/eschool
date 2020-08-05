@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.network "private_network", ip: "192.168.14.89"
       subconfig.vm.provider "virtualbox" do |vb|
           vb.name = "eschool_db"
-          vb.memory = "1024"
+          vb.memory = "512"
           vb.cpus = "1"
       end
       subconfig.vm.provision :shell, path: "db.sh"
@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.network "private_network", ip: APP1_IP
       subconfig.vm.provider "virtualbox" do |vb|
           vb.name = "eschool_app1"
-          vb.memory = "1024"
+          vb.memory = "512"
           vb.cpus = "1"
       end
       subconfig.vm.provision :shell, path: "app.sh", env: {"APP_IP" => APP1_IP}
@@ -32,7 +32,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.network "private_network", ip: APP2_IP
       subconfig.vm.provider "virtualbox" do |vb|
           vb.name = "eschool_app2"
-          vb.memory = "1024"
+          vb.memory = "512"
           vb.cpus = "1"
       end
       subconfig.vm.provision :shell, path: "app.sh", env: {"APP_IP" => APP2_IP}
@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.network "private_network", ip: LB_BE_IP
       subconfig.vm.provider "virtualbox" do |vb|
           vb.name = "eschool_lb_be"
-          vb.memory = "1024"
+          vb.memory = "512"
           vb.cpus = "1"
       end
       subconfig.vm.provision :shell, path: "lb_be.sh"
@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.synced_folder ".", "/vagrant"
       subconfig.vm.provider "virtualbox" do |vb|
           vb.name = "eschool_front"
-          vb.memory = "1024"
+          vb.memory = "512"
           vb.cpus = "1"
       end
       subconfig.vm.provision :shell, path: "fe.sh", env: {"LB_BE_IP" => LB_BE_IP}
