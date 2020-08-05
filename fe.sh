@@ -12,7 +12,7 @@ npm i -g @angular/cli
 
 git clone https://github.com/yurkovskiy/final_project.git
 chown vagrant:vagrant /home/vagrant/final_project
-sed -i "/baseUrl/ s|'https\?://.*'|'http:$LB_BE_IP'|" /home/vagrant/final_project/src/app/services/token-interceptor.service.ts
+sed -i "/baseUrl/ s|'https\?://.*'|'http://$LB_BE_IP'|" /home/vagrant/final_project/src/app/services/token-interceptor.service.ts
 cd final_project/
 /usr/local/bin/yarn install
 /usr/local/bin/ng build --prod
