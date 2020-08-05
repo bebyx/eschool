@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
           vb.memory = "512"
           vb.cpus = "1"
       end
-      subconfig.vm.provision :shell, path: "lb_be.sh"
+      subconfig.vm.provision :shell, path: "lb_be.sh", env: {"APP1_IP" => APP1_IP, "APP2_IP" => APP2_IP}
   end
 
   config.vm.define "fe" do |subconfig|

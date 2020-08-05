@@ -10,8 +10,8 @@ setenforce 0
 cat<<EOF > /etc/httpd/conf.d/lb.conf
 <VirtualHost *:80>
 <Proxy balancer://mycluster>
-    BalancerMember http://192.168.14.88:8080
-    BalancerMember http://192.168.14.90:8080
+    BalancerMember http://$APP1_IP:8080
+    BalancerMember http://$APP2_IP:8080
 </Proxy>
 
     ProxyPreserveHost On
