@@ -9,9 +9,19 @@ setenforce 0
 
 cat<<EOF > /etc/httpd/conf.d/lb.conf
 <VirtualHost *:80>
+
+Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_ROUTE_CHANGED
+
+<Proxy *>
+    Order deny,allow
+    Allow from all
+</Proxy>
+
 <Proxy balancer://mycluster>
-    BalancerMember http://$APP1_IP:8080
-    BalancerMember http://$APP2_IP:8080
+    BalancerMember http://$APP1_IP:8080 route=backend-1 enablereuse=On
+    BalancerMember http://$APP2_IP:8080 route=backend-2 enablereuse=On
+    ProxySet lbmethod=bytraffic
+    ProxySet stickysession=ROUTEID
 </Proxy>
 
     ProxyPreserveHost On
