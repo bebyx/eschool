@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision :shell, path: "lb.sh", env: {"APP1_IP" => BE1_IP, "APP2_IP" => BE2_IP}
   end
 
-  config.vm.define "fe" do |subconfig|
+  config.vm.define "fe1" do |subconfig|
       subconfig.vm.box = BOX_IMAGE
       subconfig.vm.network "private_network", ip: FE1_IP
       subconfig.vm.synced_folder ".", "/vagrant"
@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision :shell, path: "fe.sh", env: {"LB_BE_IP" => LB_BE_IP}
   end
 
-  config.vm.define "fe" do |subconfig|
+  config.vm.define "fe2" do |subconfig|
       subconfig.vm.box = BOX_IMAGE
       subconfig.vm.network "private_network", ip: FE2_IP
       subconfig.vm.synced_folder ".", "/vagrant"
@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
       subconfig.vm.provision :shell, path: "fe.sh", env: {"LB_BE_IP" => LB_BE_IP}
   end
 
-  config.vm.define "lb_be" do |subconfig|
+  config.vm.define "lb_fe" do |subconfig|
       subconfig.vm.box = BOX_IMAGE
       subconfig.vm.network "private_network", ip: LB_FE_IP
       subconfig.vm.provider "virtualbox" do |vb|
