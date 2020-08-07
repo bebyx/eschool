@@ -11,8 +11,9 @@ npm i -g yarn
 npm i -g @angular/cli
 
 git clone https://github.com/yurkovskiy/final_project.git
-chown vagrant:vagrant /home/vagrant/final_project
-sed -i "/baseUrl/ s|'https\?://.*'|'http://$LB_BE_IP'|" /home/vagrant/final_project/src/app/services/token-interceptor.service.ts
+chown -R bebyx:bebyx /home/bebyx/final_project/
+sed -i "/baseUrl/ s|'https\?://.*'|'http://$LB_BE_IP'|" /home/bebyx/final_project/src/app/services/token-interceptor.service.ts
+
 cd final_project/
 /usr/local/bin/yarn install
 /usr/local/bin/ng build --prod
@@ -24,10 +25,10 @@ setenforce 0
 
 # Create and assign frontend Apache folder
 mkdir /var/www/eschool
-chown -R vagrant:vagrant /var/www/eschool/
+chown -R bebyx:bebyx /var/www/eschool/
 
 # Copy frontend files into Apache folder
-cp -r /home/vagrant/final_project/dist/eSchool/* /var/www/eschool/
+cp -r /home/bebyx/final_project/dist/eSchool/* /var/www/eschool/
 wget "https://dtapi.if.ua/~yurkovskiy/IF-108/htaccess_example_fe" -O /var/www/eschool/.htaccess
 
 # Add VirtualHost for the web instance

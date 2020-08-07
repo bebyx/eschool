@@ -24,6 +24,7 @@ setenforce 0
 
 # Clone web app source
 git clone https://github.com/yurkovskiy/eSchool
+chown -R bebyx:bebyx eSchool/
 
 # Function to change app config files: $1 is existing pattern, $2 is our input, $3 is config file path.
 function edit_config() {
@@ -40,7 +41,7 @@ edit_config https://fierce-shore-32592.herokuapp.com http://$APP_IP:8080 $config
 edit_config 35.242.199.77:3306 $DB_IP:3306 $config_prod_file
 edit_config DATASOURCE_USERNAME:root DATASOURCE_USERNAME:eschool $config_prod_file
 edit_config DATASOURCE_PASSWORD:CS5eWQxnja0lAESd DATASOURCE_PASSWORD:password $config_prod_file
-edit_config https://35.240.41.176:8443 https://$APP_IP:8080 $config_prod_file
+edit_config https://35.240.41.176:8443 http://$APP_IP:8080 $config_prod_file
 
 # Use Maven to build .jar package
 cd eSchool/

@@ -18,8 +18,8 @@ Header add Set-Cookie "ROUTEID=.%{BALANCER_WORKER_ROUTE}e; path=/" env=BALANCER_
 </Proxy>
 
 <Proxy balancer://mycluster>
-    BalancerMember http://$APP1_IP:8080 route=backend-1 enablereuse=On
-    BalancerMember http://$APP2_IP:8080 route=backend-2 enablereuse=On
+    BalancerMember http://$APP1_IP$PORT route=backend-1 enablereuse=On
+    BalancerMember http://$APP2_IP$PORT route=backend-2 enablereuse=On
     ProxySet lbmethod=bytraffic
     ProxySet stickysession=ROUTEID
 </Proxy>
