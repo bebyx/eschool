@@ -4,4 +4,4 @@ Run Vagrant: `vagrant up`
 
 Wait while scripts finish their job...
 
-Open web app in your host machine browser: http://192.168.14.92
+Open web app in your browser via lb_fe external IP address.

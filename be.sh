@@ -18,7 +18,7 @@ chmod +x /etc/profile.d/maven.sh
 source /etc/profile.d/maven.sh
 
 # Open 8080 port to reach web app from the host machine
-firewall-cmd --permanent --zone=public --add-port=8080/tcp
+firewall-cmd --permanent --zone=trusted --add-port=8080/tcp
 firewall-cmd --reload
 setenforce 0
 

@@ -29,5 +29,5 @@ sed -i.bak '/bind-address/ s/#bind-address=127.0.0.1/bind-address=0.0.0.0/' /etc
 systemctl restart mariadb
 
 # Open mysql 3306 port for db to be reached by backend VM
-firewall-cmd --permanent --zone=public --add-port=3306/tcp
+firewall-cmd --permanent --zone=trusted --add-port=3306/tcp
 firewall-cmd --reload
