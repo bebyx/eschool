@@ -13,6 +13,9 @@ G_JSON = "/home/bebyx/.vagrant.d/trainingground-5ad01201922d.json"
 SSH_USER = "bebyx"
 SSH_KEY = "~/.ssh/id_rsa"
 
+SSH_KEY_INSTANCE = IO.binread("/home/bebyx/.vagrant.d/ssh/id_rsa")
+SSH_PUB_INSTANCE = IO.binread("/home/bebyx/.vagrant.d/ssh/id_rsa.pub")
+
 Vagrant.configure("2") do |config|
   config.vm.box = BOX_IMAGE
 
@@ -41,6 +44,7 @@ Vagrant.configure("2") do |config|
     subconfig.vm.provider :google do |google, override|
         google.google_project_id = G_PROJECT_ID
         google.google_json_key_location = G_JSON
+        google.tags = ['http-server', 'jenkins']
 
         google.zone = "europe-west3-c"
         google.zone_config "europe-west3-c" do |zone_config|
@@ -179,7 +183,8 @@ Vagrant.configure("2") do |config|
 
           override.ssh.username = SSH_USER
           override.ssh.private_key_path = SSH_KEY
-          override.vm.provision :shell, path: "jen.sh", env: {"APP1_IP" => BE1_IP, "APP2_IP" => BE2_IP}
+          override.vm.provision :shell, path: "jen.sh", env: {"SSH_KEY_INSTANCE" => SSH_KEY_INSTANCE,
+                                                              "SSH_PUB_INSTANCE" => SSH_PUB_INSTANCE}
       end
     end
 

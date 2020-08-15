@@ -40,10 +40,21 @@ cat <<-EOF > /var/lib/jenkins/hudson.tasks.Maven.xml
 </hudson.tasks.Maven_-DescriptorImpl>
 EOF
 
+# Creating jenkins ssh keys
+mkdir /var/lib/jenkins/.ssh
+chown -R jenkins:jenkins /var/lib/jenkins/.ssh
+chmod 700 /var/lib/jenkins/.ssh/
+echo -e "$SSH_KEY_INSTANCE" > /var/lib/jenkins/.ssh/id_rsa
+echo -e "$SSH_PUB_INSTANCE" > /var/lib/jenkins/.ssh/id_rsa.pub
+chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa
+chown jenkins:jenkins /var/lib/jenkins/.ssh/id_rsa.pub
+chmod 600 /var/lib/jenkins/.ssh/id_rsa
+chmod 600 /var/lib/jenkins/.ssh/id_rsa.pub
+
 java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin safe-restart
 systemctl restart jenkins
 sleep 120
 
 java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin create-job eschool < /vagrant/eschool.xml
 
-java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin build eschool
+#java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin build eschool
