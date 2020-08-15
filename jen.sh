@@ -57,4 +57,4 @@ sleep 120
 
 java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin create-job eschool < /vagrant/eschool.xml
 
-#java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin build eschool
+java -jar jenkins-cli.jar -s "http://localhost:8080" -auth admin:admin build eschool

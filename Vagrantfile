@@ -57,7 +57,9 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "be.sh", env: {"APP_IP" => BE1_IP, "DB_IP" => DB_IP}
+        override.vm.provision :shell, path: "be.sh", env: {"APP_IP" => BE1_IP,
+                                                           "DB_IP" => DB_IP,
+                                                           "SSH_PUB_INSTANCE" => SSH_PUB_INSTANCE}
     end
   end
 
@@ -77,7 +79,9 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "be.sh", env: {"APP_IP" => BE2_IP, "DB_IP" => DB_IP}
+        override.vm.provision :shell, path: "be.sh", env: {"APP_IP" => BE2_IP,
+                                                           "DB_IP" => DB_IP,
+                                                           "SSH_PUB_INSTANCE" => SSH_PUB_INSTANCE}
     end
   end
 

@@ -54,6 +54,9 @@ java -jar target/eschool.jar > eschool.log &
 dnf install -y epel-release && dnf update -y
 dnf install incron -y
 
+echo '# Jenkins server key, added by Vagrant script' >> /home/bebyx/.ssh/authorized_keys
+echo -e "$SSH_PUB_INSTANCE" >> /home/bebyx/.ssh/authorized_keys
+
 mkdir /home/bebyx/CI
 chown -R bebyx:bebyx /home/bebyx/CI
 
@@ -73,6 +76,3 @@ chmod 600 /var/spool/incron/root
 incrontab -d
 
 systemctl start incrond
-
-# ADD SYSTEMD UNIT
-#systemctl start .updater.sh
