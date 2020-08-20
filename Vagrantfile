@@ -182,7 +182,7 @@ Vagrant.configure("2") do |config|
           google.zone = "europe-west6-c"
           google.zone_config "europe-west6-c" do |zone_config|
             zone_config.name = "eschool-jenkins"
-            zone_config.machine_type = "g1-small"
+            zone_config.machine_type = "n1-standard-1"
             zone_config.disk_size = "20"
             zone_config.image_family = "centos-8"
             zone_config.network_ip = JENKINS_IP
