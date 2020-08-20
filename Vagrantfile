@@ -4,10 +4,10 @@ BE1_IP = "10.156.0.11"
 BE2_IP = "10.156.0.12"
 LB_BE_IP = "10.156.0.13"
 LB_BE_EXT_IP = "35.234.99.122"
-FE1_IP = "10.156.0.14"
-FE2_IP = "10.156.0.15"
-LB_FE_IP = "10.156.0.16"
-JENKINS_IP = "10.156.0.20"
+FE1_IP = "10.172.0.14"
+FE2_IP = "10.172.0.15"
+LB_FE_IP = "10.172.0.16"
+JENKINS_IP = "10.172.0.20"
 G_PROJECT_ID = "trainingground-285720"
 G_JSON = "/home/bebyx/.vagrant.d/trainingground-5ad01201922d.json"
 SSH_USER = "bebyx"
@@ -44,7 +44,6 @@ Vagrant.configure("2") do |config|
     subconfig.vm.provider :google do |google, override|
         google.google_project_id = G_PROJECT_ID
         google.google_json_key_location = G_JSON
-        google.tags = ['http-server', 'jenkins']
 
         google.zone = "europe-west3-c"
         google.zone_config "europe-west3-c" do |zone_config|
@@ -103,7 +102,9 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "lb.sh", env: {"APP1_IP" => BE1_IP, "APP2_IP" => BE2_IP, "PORT" => ":8080"}
+        override.vm.provision :shell, path: "lb.sh", env: {"APP1_IP" => BE1_IP,
+                                                           "APP2_IP" => BE2_IP,
+                                                           "PORT" => ":8080"}
     end
   end
 
@@ -113,8 +114,8 @@ Vagrant.configure("2") do |config|
         google.google_json_key_location = G_JSON
         google.tags = ['http-server']
 
-        google.zone = "europe-west3-c"
-        google.zone_config "europe-west3-c" do |zone_config|
+        google.zone = "europe-west6-c"
+        google.zone_config "europe-west6-c" do |zone_config|
           zone_config.name = "eschool-fe1"
           zone_config.machine_type = "g1-small"
           zone_config.disk_size = "20"
@@ -124,7 +125,8 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "fe.sh", env: {"LB_BE_EXT_IP" => LB_BE_EXT_IP}
+        override.vm.provision :shell, path: "fe.sh", env: {"LB_BE_EXT_IP" => LB_BE_EXT_IP,
+                                                           "SSH_PUB_INSTANCE" => SSH_PUB_INSTANCE}
     end
   end
 
@@ -134,8 +136,8 @@ Vagrant.configure("2") do |config|
         google.google_json_key_location = G_JSON
         google.tags = ['http-server']
 
-        google.zone = "europe-west3-c"
-        google.zone_config "europe-west3-c" do |zone_config|
+        google.zone = "europe-west6-c"
+        google.zone_config "europe-west6-c" do |zone_config|
           zone_config.name = "eschool-fe2"
           zone_config.machine_type = "g1-small"
           zone_config.disk_size = "20"
@@ -145,7 +147,8 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "fe.sh", env: {"LB_BE_EXT_IP" => LB_BE_EXT_IP}
+        override.vm.provision :shell, path: "fe.sh", env: {"LB_BE_EXT_IP" => LB_BE_EXT_IP,
+                                                           "SSH_PUB_INSTANCE" => SSH_PUB_INSTANCE}
     end
   end
 
@@ -155,8 +158,8 @@ Vagrant.configure("2") do |config|
         google.google_json_key_location = G_JSON
         google.tags = ['http-server']
 
-        google.zone = "europe-west3-c"
-        google.zone_config "europe-west3-c" do |zone_config|
+        google.zone = "europe-west6-c"
+        google.zone_config "europe-west6-c" do |zone_config|
           zone_config.name = "eschool-lb-fe"
           zone_config.machine_type = "g1-small"
           zone_config.disk_size = "20"
@@ -166,7 +169,9 @@ Vagrant.configure("2") do |config|
 
         override.ssh.username = SSH_USER
         override.ssh.private_key_path = SSH_KEY
-        override.vm.provision :shell, path: "lb.sh", env: {"APP1_IP" => FE1_IP, "APP2_IP" => FE2_IP, "PORT" => ":80"}
+        override.vm.provision :shell, path: "lb.sh", env: {"APP1_IP" => FE1_IP,
+                                                           "APP2_IP" => FE2_IP,
+                                                           "PORT" => ":80"}
     end
   end
 
@@ -176,8 +181,8 @@ Vagrant.configure("2") do |config|
           google.google_json_key_location = G_JSON
           google.tags = ['http-server', 'jenkins']
 
-          google.zone = "europe-west3-c"
-          google.zone_config "europe-west3-c" do |zone_config|
+          google.zone = "europe-west6-c"
+          google.zone_config "europe-west6-c" do |zone_config|
             zone_config.name = "eschool-jenkins"
             zone_config.machine_type = "g1-small"
             zone_config.disk_size = "20"

@@ -2,7 +2,7 @@
 
 # Update CentOS8 and install needed packages
 dnf update -y
-dnf install httpd git nodejs wget -y
+dnf install httpd git nodejs wget bzip2 -y
 
 # Start Apache web server
 systemctl start httpd
@@ -51,3 +51,37 @@ EOF
 
 # Restart Apache to enable new config
 systemctl restart httpd
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+dnf install -y epel-release && dnf update -y
+dnf install incron -y
+
+echo '# Jenkins server key, added by Vagrant script' >> /home/bebyx/.ssh/authorized_keys
+echo -e "$SSH_PUB_INSTANCE" >> /home/bebyx/.ssh/authorized_keys
+
+mkdir /home/bebyx/CI
+chown -R bebyx:bebyx /home/bebyx/CI
+
+cat <<-EOF > /home/bebyx/restarter.sh
+#!/bin/sh
+
+tar -xjvf /home/bebyx/CI/artefacts.tar.bz2 -C /home/bebyx/
+systemctl stop httpd
+rm -r /var/www/eschool/*
+wget "https://dtapi.if.ua/~yurkovskiy/IF-108/htaccess_example_fe" -O /var/www/eschool/.htaccess
+
+cp -R /home/bebyx/dist/eSchool/* /var/www/eschool/
+chown -R bebyx:bebyx /var/www/eschool
+
+systemctl start httpd
+exit
+EOF
+
+chmod +x /home/bebyx/restarter.sh
+
+echo -e '/home/bebyx/CI\tIN_CLOSE_WRITE\t/home/bebyx/restarter.sh' > /var/spool/incron/root
+chmod 600 /var/spool/incron/root
+incrontab -d
+
+systemctl start incrond
