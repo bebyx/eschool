@@ -3,7 +3,7 @@ DB_IP = "10.156.0.10"
 BE1_IP = "10.156.0.11"
 BE2_IP = "10.156.0.12"
 LB_BE_IP = "10.156.0.13"
-LB_BE_EXT_IP = "35.234.99.122"
+LB_BE_EXT_IP = "35.234.99.122" #Remember to make this static
 FE1_IP = "10.172.0.14"
 FE2_IP = "10.172.0.15"
 LB_FE_IP = "10.172.0.16"
@@ -112,7 +112,6 @@ Vagrant.configure("2") do |config|
     subconfig.vm.provider :google do |google, override|
         google.google_project_id = G_PROJECT_ID
         google.google_json_key_location = G_JSON
-        google.tags = ['http-server']
 
         google.zone = "europe-west6-c"
         google.zone_config "europe-west6-c" do |zone_config|
@@ -134,7 +133,6 @@ Vagrant.configure("2") do |config|
     subconfig.vm.provider :google do |google, override|
         google.google_project_id = G_PROJECT_ID
         google.google_json_key_location = G_JSON
-        google.tags = ['http-server']
 
         google.zone = "europe-west6-c"
         google.zone_config "europe-west6-c" do |zone_config|
